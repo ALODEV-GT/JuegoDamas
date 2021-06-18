@@ -19,15 +19,31 @@ public class Casilla{
 
     private void establecerColor(boolean esBlanca){
         if(!esBlanca){
-            this.color = Run.PURPURA; 
+            this.color = Run.AZUL; 
         }
+    }
+
+    public boolean esBlanca(){
+        return this.esBlanca;
+    }
+
+    public void agregarFicha(Ficha ficha){
+        this.ficha = ficha;
+        this.tieneFicha = true;
+    }
+
+    public void quitarFicha(){
+        this.tieneFicha = false;
     }
     
 
     @Override
     public String toString(){
         if (tieneFicha) {
-            return ficha.toString();
+            return color + "████████ " +Run.COLOR_NORMAL+
+                   color + "██"+ficha.getColor()+"████"+color+"██ " +Run.COLOR_NORMAL+
+                   color + "██"+ficha.getColor()+"████"+color+"██ " +Run.COLOR_NORMAL+
+                   color + "████████" + Run.COLOR_NORMAL;
         }else{
             return color + "████████ " +Run.COLOR_NORMAL+
                    color + "████████ " +Run.COLOR_NORMAL+

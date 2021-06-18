@@ -12,9 +12,13 @@ public class Ficha {
         if (esRoja) {
             this.color = Run.ROJO;
         }else{
-            this.color = Run.AZUL;
+            this.color = Run.NEGRO;
         }
     }   
+
+    public String getColor(){
+        return this.color;
+    }
 
     @Override
     public String toString(){

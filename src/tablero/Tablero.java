@@ -1,23 +1,29 @@
 package tablero;
 
 public class Tablero {
+    private Casilla[] tab = new Casilla[64];
 
-    public void dibujarTablero() {
-        Casilla[] tab = new Casilla[64];
+    public void iniciarTablero() {
 
         boolean esBlanca = false;
         for (int i = 0; i < tab.length; i++) {
 
             tab[i] = new Casilla(false, esBlanca);
-            
 
-            if ((i+1) % 8 == 0 && i != 0) {
+            if ((i + 1) % 8 == 0 && i != 0) {
                 //
-            }else{
+            } else {
                 esBlanca = !esBlanca;
             }
         }
 
+        agregarFichas(tab, true);
+        agregarFichas(tab, false);
+
+        mostrarTablero();
+    }
+
+    public void mostrarTablero() {
         int contador = 0;
         for (int i = 0; i < Math.sqrt(tab.length); i++) {
             Casilla[] filaFichas = new Casilla[(int) Math.sqrt(tab.length)];
@@ -27,6 +33,34 @@ public class Tablero {
             }
             imprimirFichas(filaFichas);
             System.out.println();
+        }
+    }
+
+    public void agregarFichas(Casilla[] casillas, boolean rojas) {
+
+        int contador = 0;
+        int i = 0;
+
+        if (rojas) {
+            while (contador != 12) {
+                if (casillas[i].esBlanca()) {
+                    Ficha ficha = new Ficha(true);
+                    casillas[i].agregarFicha(ficha);
+                    contador++;
+                }
+                i++;
+            }
+        } else {
+            contador = 0;
+            i = casillas.length - 1;
+            while (contador != 12) {
+                if (casillas[i].esBlanca()) {
+                    Ficha ficha = new Ficha(false);
+                    casillas[i].agregarFicha(ficha);
+                    contador++;
+                }
+                i--;
+            }
         }
     }
 
