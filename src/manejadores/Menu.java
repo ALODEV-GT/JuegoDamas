@@ -18,7 +18,14 @@ public class Menu {
 
             switch (opcion) {
                 case 1:
-                    // Jugar
+                    // Jugar                    
+                    if (vectorJugadores.genNumJugadores()<2) {
+                        System.out.println("Para jugar, almenos deben existir 2 jugadores, Registrate");
+                    } else {
+                        Jugar jugar = new Jugar(vectorJugadores);
+                        jugar.jugar();    
+                    }
+                    
                     break;
                 case 2:
                     // Registrar jugador

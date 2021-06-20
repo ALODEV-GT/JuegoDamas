@@ -17,4 +17,10 @@ public class Run {
         //Tablero tab = new Tablero();
         //tab.iniciarTablero();
     }
+
+    public static void limpiarPantalla(){
+        for (int i = 0; i < 10; i++) {
+            System.out.println("\n\n\n\n");
+        }
+    }
 }

@@ -31,6 +31,10 @@ public class VectorJugadores {
         return this.hayEspacio;
     }
 
+    public Jugador getJugador(int posicion){
+        return jugadores[posicion];
+    }
+
     public boolean hayJugadores(){
         if (contadorJugadores > 0) {
             return true;
@@ -39,9 +43,14 @@ public class VectorJugadores {
         }
     }
 
+    public int genNumJugadores(){
+        return contadorJugadores;
+    }
+
     public void mostrarJugadores(){
         ordenarJugadores();
         for (int i = 0; i < contadorJugadores; i++) {
+            System.out.println("Posicion: " + i);
             System.out.println(jugadores[i]);
         }
     }
