@@ -1,4 +1,4 @@
-package partida;
+package manejadores;
 
 import test.Run;
 

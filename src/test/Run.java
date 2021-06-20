@@ -1,7 +1,7 @@
 package test;
 import java.util.Scanner;
 
-import partida.Menu;
+import manejadores.Menu;
 import tablero.Tablero;
 public class Run {
     //Colores

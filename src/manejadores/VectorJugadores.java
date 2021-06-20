@@ -1,5 +1,6 @@
-package partida;
+package manejadores;
 
+import partida.Jugador;
 import test.Run;
 
 public class VectorJugadores {
