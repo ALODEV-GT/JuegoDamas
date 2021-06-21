@@ -2,8 +2,6 @@ package test;
 import java.util.Scanner;
 
 import manejadores.Menu;
-import tablero.Movimientos;
-import tablero.Tablero;
 public class Run {
     //Colores
     public static final String COLOR_NORMAL = "\u001B[0m";

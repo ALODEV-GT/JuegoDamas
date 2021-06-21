@@ -29,7 +29,7 @@ public class Ficha {
     }
 
     public void setEsReyna(boolean esReyna){
-        this.esReyna = true;
+        this.esReyna = esReyna;
     }
 
     public String colorReyna(){

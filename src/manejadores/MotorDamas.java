@@ -35,11 +35,18 @@ public class MotorDamas {
             }
         }
 
+        
         do {
+            boolean seObligo = false;
             System.out.println("Turno de " + jugadores[indiceJugador].getNombre() + " ("
                     + jugadores[indiceJugador].getColor() + ")");
-            realizarMovimiento(jugadores[indiceJugador].esRoja());
+
+            seObligo = Movimientos.obligarAComer(tablero, jugadores[indiceJugador].esRoja());
+            if (!seObligo) {
+                realizarMovimiento(jugadores[indiceJugador].esRoja());
+            }
             indiceJugador = cambiarTurno(indiceJugador);
+            
         } while (!temino);
     }
 
