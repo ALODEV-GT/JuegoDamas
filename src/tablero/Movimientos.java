@@ -19,18 +19,10 @@ public class Movimientos {
     private boolean comerObligatoriamente = false;
     private int xFichaComer;
     private int yFichaComer;
-
-    private static boolean hayMovimientos = false;
-    private static String opcionesComerS = "";
-    private static boolean cambioTurno = false;
+    private boolean hayMovimientos = true;
 
     public Movimientos(Casilla[][] tablero) {
         this.tablero = tablero;
-        if (cambioTurno) {
-            Movimientos.hayMovimientos = false;
-            Movimientos.opcionesComerS = "";
-            Movimientos.cambioTurno = false;
-        }
     }
 
     public boolean getComerObligatoriamente() {
@@ -47,7 +39,6 @@ public class Movimientos {
             MostrarMovimientosComer();
 
             if (hayMovimientos) {
-                System.out.println("------------- ENTREE A ELEGIR OPCION -----------------");
                 int eleccionOpcionComer = eleccionOpcionComer();
                 definirCoordenadaDespuesDeComer(eleccionOpcionComer);
                 definirFichaAComer(eleccionOpcionComer);
@@ -56,6 +47,7 @@ public class Movimientos {
                     tablero[xFichaComer][yFichaComer].quitarFicha();
                 }
             }
+
         }
         return comerObligatoriamente;
     }
@@ -164,7 +156,7 @@ public class Movimientos {
                 if (alrededor[i] != null && alrededor[i].tieneFicha() == true) {
                     if (!alrededor[i].getFicha().getColor().equals(casilla.getFicha().getColor())) {
                         if (alrededorComer[i] != null && alrededorComer[i].tieneFicha() == false) {
-                            Movimientos.opcionesComerS += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
+                            opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
                             opcionesParaComer[i] = i;
                             comerObligatoriamente = true;
                         }
@@ -178,7 +170,7 @@ public class Movimientos {
                         if (!alrededor[i].getFicha().getColor().equals(casilla.getFicha().getColor())) {
                             if (alrededorComer[i] != null && alrededorComer[i].tieneFicha() == false) {
                                 System.out.println("No hay ficha donde quiero saltar"); // ----------------- Eliminar
-                                Movimientos.opcionesComerS += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
+                                opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
                                 opcionesParaComer[i] = i;
                                 comerObligatoriamente = true;
                             }
@@ -190,7 +182,7 @@ public class Movimientos {
                     if (alrededor[i] != null && alrededor[i].tieneFicha() == true) {
                         if (!alrededor[i].getFicha().getColor().equals(casilla.getFicha().getColor())) {
                             if (alrededorComer[i] != null && alrededorComer[i].tieneFicha() == false) {
-                                Movimientos.opcionesComerS += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
+                                opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
                                 opcionesParaComer[i] = i;
                                 comerObligatoriamente = true;
                             }
@@ -199,6 +191,11 @@ public class Movimientos {
                 }
             }
         }
+
+        if (opcionesDeMovimiento.equals("")) {
+            this.hayMovimientos = false;
+        }
+        System.out.print(opcionesDeMovimiento);
     }
 
     public void mostrarMovimientos() {
@@ -240,7 +237,6 @@ public class Movimientos {
     }
 
     public static boolean obligarAComer(Casilla[][] tablero, boolean esTurnoRojo) {
-        Movimientos.opcionesComerS = "";
         boolean seObligo = false;
         int contador = 0;
 
@@ -248,19 +244,6 @@ public class Movimientos {
             // Obligar a comer, solo si es roja
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-                    if (i == 7 && j == 7) {
-                        System.out.println(Movimientos.opcionesComerS);
-                        if (Movimientos.opcionesComerS.equals("")) {
-                            Movimientos.hayMovimientos = false;
-                        } else {
-                            Movimientos.hayMovimientos = true;
-                            System.out.println("Hay movimientos: " + Movimientos.hayMovimientos);
-                        }
-                    }else{
-                        System.out.println("no hay para comer (Negro)");
-                    }
-
-
                     Movimientos mov = new Movimientos(tablero);
                     if (tablero[i][j].getFicha() != null) {
                         mov.comerObligatoriamente(i, j, esTurnoRojo);
@@ -278,32 +261,21 @@ public class Movimientos {
             // Obligar a comer, solo si es negro
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-
-                    if (i == 7 && j == 7) {
-                        System.out.println(Movimientos.opcionesComerS);
-                        if (Movimientos.opcionesComerS.equals("")) {
-                            Movimientos.hayMovimientos = false;
-                        } else {
-                            Movimientos.hayMovimientos = true;
-                            System.out.println("Hay movimientos: " + Movimientos.hayMovimientos);
-                        }
-                    }
-
                     Movimientos mov = new Movimientos(tablero);
                     if (tablero[i][j].getFicha() != null) {
                         mov.comerObligatoriamente(i, j, esTurnoRojo);
                         if (mov.getComerObligatoriamente()) {
                             contador++;
                             seObligo = true;
+                            if (contador == 4) {
+                                break;
+                            }
                         }
                     }
 
                 }
             }
         }
-
-        
-        Movimientos.cambioTurno = true;
         return seObligo;
     }
 
