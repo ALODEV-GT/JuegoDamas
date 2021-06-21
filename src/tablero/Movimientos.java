@@ -20,7 +20,6 @@ public class Movimientos {
     private int xFichaComer;
     private int yFichaComer;
     private boolean hayMovimientos = true;
-    private String opcionesDeMovimiento = "";
 
     public Movimientos(Casilla[][] tablero) {
         this.tablero = tablero;
@@ -33,7 +32,6 @@ public class Movimientos {
     public boolean comerObligatoriamente(int xInicial, int yInicial, boolean esTurnoRojo) {
         this.xInicial = xInicial;
         this.yInicial = yInicial;
-        this.comerObligatoriamente = false;
 
         if (verificarCasillaSinTexto(xInicial, yInicial, esTurnoRojo)) {
             buscarAlrededor();
@@ -41,7 +39,6 @@ public class Movimientos {
             MostrarMovimientosComer();
 
             if (hayMovimientos) {
-                System.out.println(opcionesDeMovimiento);
                 int eleccionOpcionComer = eleccionOpcionComer();
                 definirCoordenadaDespuesDeComer(eleccionOpcionComer);
                 definirFichaAComer(eleccionOpcionComer);
@@ -52,8 +49,6 @@ public class Movimientos {
             }
 
         }
-        System.out.println("Terminee comerObligatoriamente" );
-        System.out.println("Dovolvi: " + comerObligatoriamente);
         return comerObligatoriamente;
     }
 
@@ -155,16 +150,15 @@ public class Movimientos {
     }
 
     public void MostrarMovimientosComer() {
-        
+        String opcionesDeMovimiento = "";
         if (casilla.getFicha().esReyna()) {
             for (int i = 0; i < alrededor.length; i++) {
                 if (alrededor[i] != null && alrededor[i].tieneFicha() == true) {
                     if (!alrededor[i].getFicha().getColor().equals(casilla.getFicha().getColor())) {
                         if (alrededorComer[i] != null && alrededorComer[i].tieneFicha() == false) {
-                            this.opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
+                            opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
                             opcionesParaComer[i] = i;
                             comerObligatoriamente = true;
-                            this.hayMovimientos = true;
                         }
                     }
                 }
@@ -175,10 +169,10 @@ public class Movimientos {
                     if (alrededor[i] != null && alrededor[i].tieneFicha() == true) {
                         if (!alrededor[i].getFicha().getColor().equals(casilla.getFicha().getColor())) {
                             if (alrededorComer[i] != null && alrededorComer[i].tieneFicha() == false) {
-                                this.opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
+                                System.out.println("No hay ficha donde quiero saltar"); // ----------------- Eliminar
+                                opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
                                 opcionesParaComer[i] = i;
                                 comerObligatoriamente = true;
-                                this.hayMovimientos = true;
                             }
                         }
                     }
@@ -188,10 +182,9 @@ public class Movimientos {
                     if (alrededor[i] != null && alrededor[i].tieneFicha() == true) {
                         if (!alrededor[i].getFicha().getColor().equals(casilla.getFicha().getColor())) {
                             if (alrededorComer[i] != null && alrededorComer[i].tieneFicha() == false) {
-                                this.opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
+                                opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
                                 opcionesParaComer[i] = i;
                                 comerObligatoriamente = true;
-                                this.hayMovimientos = true;
                             }
                         }
                     }
@@ -199,9 +192,10 @@ public class Movimientos {
             }
         }
 
-        if (this.opcionesDeMovimiento.equals("")) {
+        if (opcionesDeMovimiento.equals("")) {
             this.hayMovimientos = false;
         }
+        System.out.print(opcionesDeMovimiento);
     }
 
     public void mostrarMovimientos() {
@@ -246,14 +240,12 @@ public class Movimientos {
         boolean seObligo = false;
         int contador = 0;
 
-        Movimientos mov = new Movimientos(tablero);
-
         if (esTurnoRojo) {
             // Obligar a comer, solo si es roja
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
+                    Movimientos mov = new Movimientos(tablero);
                     if (tablero[i][j].getFicha() != null) {
-                        System.out.println("R x: " + i + " y: " + j);
                         mov.comerObligatoriamente(i, j, esTurnoRojo);
                         if (mov.getComerObligatoriamente()) {
                             contador++;
@@ -269,12 +261,9 @@ public class Movimientos {
             // Obligar a comer, solo si es negro
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-                    System.out.print("N x: " + i );
-                    System.out.println(" y: " + j);
+                    Movimientos mov = new Movimientos(tablero);
                     if (tablero[i][j].getFicha() != null) {
-                        System.out.println("----------Inicio------------");                        
                         mov.comerObligatoriamente(i, j, esTurnoRojo);
-                        System.out.println("----------Fin-------------");
                         if (mov.getComerObligatoriamente()) {
                             contador++;
                             seObligo = true;
@@ -286,8 +275,6 @@ public class Movimientos {
 
                 }
             }
-            
-            
         }
         return seObligo;
     }
@@ -323,7 +310,7 @@ public class Movimientos {
 
             for (int i = 0; i < alrededorComer.length; i++) {
                 if (opcionesParaComer[i] == opcion) {
-                    existe = true;                    
+                    existe = true;
                 }
             }
 
