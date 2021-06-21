@@ -16,6 +16,14 @@ public class Ficha {
         }
     }   
 
+    public boolean esRoja(){
+        return esRoja;
+    }
+
+    public boolean esReyna(){
+        return esReyna;
+    }
+
     public String getColor(){
         return this.color;
     }

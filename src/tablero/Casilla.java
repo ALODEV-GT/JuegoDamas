@@ -17,6 +17,10 @@ public class Casilla{
         }
     }
 
+    public boolean tieneFicha(){
+        return this.tieneFicha;
+    }
+
     private void establecerColor(boolean esBlanca){
         if(!esBlanca){
             this.color = Run.AZUL; 
@@ -33,9 +37,13 @@ public class Casilla{
     }
 
     public void quitarFicha(){
+        this.ficha = null;        
         this.tieneFicha = false;
     }
     
+    public Ficha getFicha(){
+        return this.ficha;
+    }
 
     @Override
     public String toString(){

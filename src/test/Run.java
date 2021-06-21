@@ -2,6 +2,7 @@ package test;
 import java.util.Scanner;
 
 import manejadores.Menu;
+import tablero.Movimientos;
 import tablero.Tablero;
 public class Run {
     //Colores
@@ -12,10 +13,14 @@ public class Run {
     public static Scanner entrada = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Menu menu = new Menu();
+        //Menu menu = new Menu();
 
-        //Tablero tab = new Tablero();
-        //tab.iniciarTablero();
+        Tablero tab = new Tablero();
+        tab.iniciarTablero();
+        tab.pruebaOpcionesMover(5,2);
+        System.out.println("---------------------------------------------------");
+        tab.mostrarTablero();
+
     }
 
     public static void limpiarPantalla(){

@@ -1,7 +1,11 @@
 package tablero;
 
+import test.Run;
+
 public class Tablero {
     private Casilla[] tab = new Casilla[64];
+    private Casilla[][] tablero = new Casilla[8][8];
+    private int contadorFilas = 0;
 
     public void iniciarTablero() {
 
@@ -21,10 +25,34 @@ public class Tablero {
         agregarFichas(tab, false);
 
         mostrarTablero();
+        organizarTablero();
+    }
+
+    private void organizarTablero(){
+        int contador = 0;
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
+                tablero[i][j] = tab[contador];
+                contador++;
+            }
+        }
+    }
+
+    /****ELIMINAR */
+    public void pruebaOpcionesMover(int x, int y){
+        Movimientos mov = new Movimientos(tablero);
+        mov.realizarMovimiento(x, y);
     }
 
     public void mostrarTablero() {
         int contador = 0;
+        this.contadorFilas = 0;
+        
+        for (int i = 0; i < Math.sqrt(tab.length); i++) {
+            System.out.print("     " + i +  "  ");
+        }
+        System.out.println();
+
         for (int i = 0; i < Math.sqrt(tab.length); i++) {
             Casilla[] filaFichas = new Casilla[(int) Math.sqrt(tab.length)];
             for (int j = 0; j < filaFichas.length; j++) {
@@ -32,11 +60,10 @@ public class Tablero {
                 contador++;
             }
             imprimirFichas(filaFichas);
-            System.out.println();
         }
     }
 
-    public void agregarFichas(Casilla[] casillas, boolean rojas) {
+    private void agregarFichas(Casilla[] casillas, boolean rojas) {
 
         int contador = 0;
         int i = 0;
@@ -64,13 +91,18 @@ public class Tablero {
         }
     }
 
-    public void imprimirFichas(Casilla[] fila) {
-        String[] lineasImprimir = { "", "", "", "" };
-
+    private void imprimirFichas(Casilla[] fila) {
+        String[] lineasImprimir = { "  ", "", "  ", "  " };
+        
         for (int i = 0; i < fila.length; i++) {
             String[] sp = fila[i].toString().split(" ");
             for (int j = 0; j < sp.length; j++) {
-                lineasImprimir[j] += " " + sp[j];
+                if (i == 0 && j == 1) {
+                    lineasImprimir[j] +=Run.COLOR_NORMAL+contadorFilas+" ";
+                    //System.out.print(contadorFilas);
+                    contadorFilas++;
+                }
+                lineasImprimir[j] += "" + sp[j];
             }
         }
 
