@@ -42,6 +42,7 @@ public class MotorDamas {
                     + jugadores[indiceJugador].getColor() + ")");
 
             seObligo = Movimientos.obligarAComer(tablero, jugadores[indiceJugador].esRoja());
+            
             if (!seObligo) {
                 realizarMovimiento(jugadores[indiceJugador].esRoja());
             }
