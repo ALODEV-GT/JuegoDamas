@@ -45,9 +45,9 @@ public class MotorDamas {
 
     public void realizarMovimiento(boolean esRoja) {
         Movimientos mov = new Movimientos(tablero);
-        System.out.println("Ingresa la coordenada en x");
+        System.out.println("Ingresa el numero de fila");
         int xInicial = Run.entrada.nextInt();
-        System.out.println("Ingresa la coordenada en y");
+        System.out.println("Ingresa el numero de columna");
         int yInicial = Run.entrada.nextInt();
         mov.realizarMovimiento(xInicial, yInicial, esRoja);
         tab.mostrarTablero();

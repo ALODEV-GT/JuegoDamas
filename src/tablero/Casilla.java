@@ -49,8 +49,8 @@ public class Casilla{
     public String toString(){
         if (tieneFicha) {
             return color + "████████ " +Run.COLOR_NORMAL+
-                   color + "██"+ficha.getColor()+"████"+color+"██ " +Run.COLOR_NORMAL+
-                   color + "██"+ficha.getColor()+"████"+color+"██ " +Run.COLOR_NORMAL+
+                   color + "██"+ficha.getColor()+"█"+ficha.colorReyna()+"█"+ficha.getColor()+"██"+color+"██ " +Run.COLOR_NORMAL+
+                   color + "██"+ficha.getColor()+"██"+ficha.colorReyna()+"█"+ficha.getColor()+"█"+color+"██ " +Run.COLOR_NORMAL+
                    color + "████████" + Run.COLOR_NORMAL;
         }else{
             return color + "████████ " +Run.COLOR_NORMAL+

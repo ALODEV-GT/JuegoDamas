@@ -10,6 +10,7 @@ public class Run {
     public static final String ROJO = "\u001B[31m";
     public static final String NEGRO = "\u001B[30m";
     public static final String AZUL = "\u001B[34m";
+    public static final String AMARILLO = "\u001B[33m";
     public static Scanner entrada = new Scanner(System.in);
 
     public static void main(String[] args) {

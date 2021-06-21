@@ -28,11 +28,23 @@ public class Ficha {
         return this.color;
     }
 
+    public void setEsReyna(boolean esReyna){
+        this.esReyna = true;
+    }
+
+    public String colorReyna(){
+        if (esReyna) {
+            return Run.AMARILLO;
+        }else{
+            return this.color;
+        }
+    }
+
     @Override
     public String toString(){
         return "████████ " + 
-             "██" + color + "████" + Run.COLOR_NORMAL + "██ " +
-             "██" + color + "████" + Run.COLOR_NORMAL + "██ " +
+             "██" + color + "█"+colorReyna()+"███" + Run.COLOR_NORMAL + "██ " +
+             "██" + color + "██"+colorReyna()+"██" + Run.COLOR_NORMAL + "██ " +
              "████████"; 
     }
 
