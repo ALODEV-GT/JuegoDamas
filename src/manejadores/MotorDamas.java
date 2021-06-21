@@ -35,23 +35,47 @@ public class MotorDamas {
             }
         }
 
-        
         do {
             boolean seObligo = false;
             System.out.println("Turno de " + jugadores[indiceJugador].getNombre() + " ("
                     + jugadores[indiceJugador].getColor() + ")");
 
-            seObligo = Movimientos.obligarAComer(tablero, jugadores[indiceJugador].esRoja());
+            seObligo = Movimientos.obligarAComer(tablero, jugadores[indiceJugador].esRoja(), tab);
             if (!seObligo) {
                 realizarMovimiento(jugadores[indiceJugador].esRoja());
             }
             indiceJugador = cambiarTurno(indiceJugador);
             tab.mostrarTablero();
+
+            temino = tab.termino();
+
         } while (!temino);
+
+        Jugador ganador = null;
+        if (tab.ganoRoja()) {
+            for (int i = 0; i < jugadores.length; i++) {
+                if (jugadores[i].esRoja()) {
+                    ganador = jugadores[i];
+                }
+            }
+        } else {
+            for (int i = 0; i < jugadores.length; i++) {
+                if (jugadores[i].esRoja() == false) {
+                    ganador = jugadores[i];
+                }
+            }
+        }
+
+        for (int i = 0; i < jugadores.length; i++) {
+            jugadores[i].agregarPartida();
+        }
+
+        System.out.println("------- FIN DE LA PARTIDA, GANADOR: " + ganador.getNombre() + " ("+ganador.getColor()+")" );
+        ganador.agregarVictoria();
     }
 
     public void realizarMovimiento(boolean esRoja) {
-        Movimientos mov = new Movimientos(tablero);
+        Movimientos mov = new Movimientos(tablero, tab);
         System.out.println("Ingresa el numero de fila");
         int xInicial = Run.entrada.nextInt();
         System.out.println("Ingresa el numero de columna");

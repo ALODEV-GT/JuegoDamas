@@ -6,6 +6,9 @@ public class Tablero {
     private Casilla[] tab = new Casilla[64];
     private Casilla[][] tablero = new Casilla[8][8];
     private int contadorFilas = 0;
+    private int fichasRojas = 12;
+    private int fichasNegras = 12;
+    private boolean ganoRoja;
 
     public void iniciarTablero() {
 
@@ -41,11 +44,31 @@ public class Tablero {
         }
     }
 
-    /****ELIMINAR */
-    public void pruebaOpcionesMover(int x, int y){
-        Movimientos mov = new Movimientos(tablero);
-        mov.realizarMovimiento(x, y);
+    public void quitarFichaRoja(boolean esRoja){
+        if (esRoja) {
+            fichasRojas--;    
+        }else{
+            fichasNegras--;
+        }   
     }
+
+    public boolean termino(){
+        if (fichasRojas == 0 ) {
+            this.ganoRoja = false;
+            return true;
+        }else if(fichasNegras == 0){
+            this.ganoRoja = true;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean ganoRoja(){
+        return ganoRoja;
+    }
+
+
 
     public void mostrarTablero() {
         int contador = 0;

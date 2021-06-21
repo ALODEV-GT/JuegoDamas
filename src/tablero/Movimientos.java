@@ -7,6 +7,7 @@ public class Movimientos {
     private Casilla casilla;
     private int xInicial;
     private int yInicial;
+    private Tablero tab;
     private Casilla[][] tablero;
     private Casilla[] alrededor = { null, null, null, null };
     private Casilla[] alrededorComer = { null, null, null, null };
@@ -21,8 +22,9 @@ public class Movimientos {
     private int yFichaComer;
     private boolean hayMovimientos = true;
 
-    public Movimientos(Casilla[][] tablero) {
+    public Movimientos(Casilla[][] tablero, Tablero tab) {
         this.tablero = tablero;
+        this.tab = tab;
     }
 
     public boolean getComerObligatoriamente() {
@@ -44,7 +46,8 @@ public class Movimientos {
                 definirFichaAComer(eleccionOpcionComer);
                 if (xDestino != -1 && yDestino != -1) {
                     moverFicha(xInicial, yInicial, xDestino, yDestino);
-                    tablero[xFichaComer][yFichaComer].quitarFicha();
+                    tab.quitarFichaRoja(tablero[xFichaComer][yFichaComer].getFicha().esRoja());
+                    tablero[xFichaComer][yFichaComer].quitarFicha();                    
                 }
             }
 
@@ -66,11 +69,19 @@ public class Movimientos {
         }
     }
 
+    private void convertirEnReyna(Casilla casilla,int xf){
+        if (casilla.getFicha().esRoja() && xf == 7) {
+            casilla.getFicha().setEsReyna(true);
+        }else if(casilla.getFicha().esRoja() == false && xf == 0){
+            casilla.getFicha().setEsReyna(true);
+        }
+    }
+
     private void moverFicha(int xi, int yi, int xf, int yf) {
         Ficha ficha = tablero[xi][yi].getFicha();
         tablero[xi][yi].quitarFicha();
-
         tablero[xf][yf].agregarFicha(ficha);
+        convertirEnReyna(tablero[xf][yf], xf);
     }
 
     private void definirCoordenadasDestino(int opcion) {
@@ -236,7 +247,7 @@ public class Movimientos {
         System.out.println(opcionesDeMovimiento);
     }
 
-    public static boolean obligarAComer(Casilla[][] tablero, boolean esTurnoRojo) {
+    public static boolean obligarAComer(Casilla[][] tablero, boolean esTurnoRojo, Tablero tab) {
         boolean seObligo = false;
         int contador = 0;
 
@@ -244,7 +255,7 @@ public class Movimientos {
             // Obligar a comer, solo si es roja
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-                    Movimientos mov = new Movimientos(tablero);
+                    Movimientos mov = new Movimientos(tablero, tab);
                     if (tablero[i][j].getFicha() != null) {
                         mov.comerObligatoriamente(i, j, esTurnoRojo);
                         if (mov.getComerObligatoriamente()) {
@@ -261,7 +272,7 @@ public class Movimientos {
             // Obligar a comer, solo si es negro
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-                    Movimientos mov = new Movimientos(tablero);
+                    Movimientos mov = new Movimientos(tablero,tab);
                     if (tablero[i][j].getFicha() != null) {
                         mov.comerObligatoriamente(i, j, esTurnoRojo);
                         if (mov.getComerObligatoriamente()) {

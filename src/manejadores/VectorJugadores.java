@@ -58,7 +58,7 @@ public class VectorJugadores {
     private void ordenarJugadores(){
         for (int i = 1; i < contadorJugadores; i++) {
             for (int j = i; j > 0; j--) {
-                if (jugadores[j].getPartidasGanadas() < jugadores[j-1].getPartidasGanadas()) {
+                if (jugadores[j].getPartidasGanadas() > jugadores[j-1].getPartidasGanadas()) {
                     Jugador aux = jugadores[j];
                     jugadores[j] = jugadores[j-1];
                     jugadores[j-1] = aux;
