@@ -46,7 +46,7 @@ public class MotorDamas {
                 realizarMovimiento(jugadores[indiceJugador].esRoja());
             }
             indiceJugador = cambiarTurno(indiceJugador);
-            
+            tab.mostrarTablero();
         } while (!temino);
     }
 
@@ -57,7 +57,6 @@ public class MotorDamas {
         System.out.println("Ingresa el numero de columna");
         int yInicial = Run.entrada.nextInt();
         mov.realizarMovimiento(xInicial, yInicial, esRoja);
-        tab.mostrarTablero();
     }
 
     public int cambiarTurno(int indiceJugador) {

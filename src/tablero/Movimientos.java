@@ -17,6 +17,9 @@ public class Movimientos {
     private int[] opcionesDisponibles = { -1, -1, -1, -1 }; // Opcion default
     private int[] opcionesParaComer = { -1, -1, -1, -1 }; // Opciones default
     private boolean comerObligatoriamente = false;
+    private int xFichaComer;
+    private int yFichaComer;
+    private boolean hayMovimientos = true;
 
     public Movimientos(Casilla[][] tablero) {
         this.tablero = tablero;
@@ -34,6 +37,17 @@ public class Movimientos {
             buscarAlrededor();
             buscarAlrededorComer();
             MostrarMovimientosComer();
+
+            if (hayMovimientos) {
+                int eleccionOpcionComer = eleccionOpcionComer();
+                definirCoordenadaDespuesDeComer(eleccionOpcionComer);
+                definirFichaAComer(eleccionOpcionComer);
+                if (xDestino != -1 && yDestino != -1) {
+                    moverFicha(xInicial, yInicial, xDestino, yDestino);
+                    tablero[xFichaComer][yFichaComer].quitarFicha();
+                }
+            }
+
         }
         return comerObligatoriamente;
     }
@@ -68,6 +82,18 @@ public class Movimientos {
 
         }
         // de lo contrario sale
+    }
+
+    private void definirCoordenadaDespuesDeComer(int opcion) {
+        String[] coordenadas = coordenadasComer[opcion].split(",");
+        xDestino = Integer.valueOf(coordenadas[0]);
+        yDestino = Integer.valueOf(coordenadas[1]);
+    }
+
+    private void definirFichaAComer(int opcion) {
+        String[] coordenadas = coordenadasMovimientos[opcion].split(",");
+        xFichaComer = Integer.valueOf(coordenadas[0]);
+        yFichaComer = Integer.valueOf(coordenadas[1]);
     }
 
     public boolean verificarCasilla(int x, int y, boolean esRoja) {
@@ -140,10 +166,10 @@ public class Movimientos {
         } else {
             if (casilla.getFicha().esRoja()) {
                 for (int i = 2; i < alrededor.length; i++) {
-                    if (alrededor[i] != null && alrededor[i].tieneFicha() == true) {                        
+                    if (alrededor[i] != null && alrededor[i].tieneFicha() == true) {
                         if (!alrededor[i].getFicha().getColor().equals(casilla.getFicha().getColor())) {
                             if (alrededorComer[i] != null && alrededorComer[i].tieneFicha() == false) {
-                                System.out.println("No hay ficha donde quiero saltar"); //----------------- Eliminar
+                                System.out.println("No hay ficha donde quiero saltar"); // ----------------- Eliminar
                                 opcionesDeMovimiento += i + ".- Comer, y pasar a (" + coordenadasComer[i] + ")\n";
                                 opcionesParaComer[i] = i;
                                 comerObligatoriamente = true;
@@ -164,6 +190,10 @@ public class Movimientos {
                     }
                 }
             }
+        }
+
+        if (opcionesDeMovimiento.equals("")) {
+            this.hayMovimientos = false;
         }
         System.out.print(opcionesDeMovimiento);
     }
@@ -211,7 +241,7 @@ public class Movimientos {
         int contador = 0;
 
         if (esTurnoRojo) {
-            //Obligar a comer, solo si es roja
+            // Obligar a comer, solo si es roja
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     Movimientos mov = new Movimientos(tablero);
@@ -227,8 +257,8 @@ public class Movimientos {
                     }
                 }
             }
-        }else{
-            //Obligar a comer, solo si es negro
+        } else {
+            // Obligar a comer, solo si es negro
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     Movimientos mov = new Movimientos(tablero);
@@ -259,16 +289,37 @@ public class Movimientos {
                 } else if (!esRoja && !tablero[x][y].getFicha().esRoja()) {
                     correcto = true;
                 } else {
-                    //System.out.println("No puedes mover fichas de tu contrincante");
+                    // System.out.println("No puedes mover fichas de tu contrincante");
                 }
             } else {
-               // System.out.println("La posicion que ingresaste no tiene ficha");
+                // System.out.println("La posicion que ingresaste no tiene ficha");
             }
         } else {
-            //System.out.println("La posicion que ingresaste no existe");
+            // System.out.println("La posicion que ingresaste no existe");
         }
 
         return correcto;
+    }
+
+    public int eleccionOpcionComer() {
+        int opcion;
+        boolean existe = false;
+        do {
+            System.out.println("Elige una opcion: ");
+            opcion = Run.entrada.nextInt();
+
+            for (int i = 0; i < alrededorComer.length; i++) {
+                if (opcionesParaComer[i] == opcion) {
+                    existe = true;
+                }
+            }
+
+            if (!existe) {
+                System.out.println("La opcion que ingresaste no existe, vuelve a intentarlo");
+            }
+
+        } while (!existe);
+        return opcion;
     }
 
     public int eleccionDeOpcion() {
