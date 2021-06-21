@@ -9,14 +9,87 @@ public class Jugar {
     private Jugador jugador1;
     private Jugador jugador2;
     private Jugador ganadorPPT;
+    private Jugador[] jugadores = new Jugador[2];
 
     public Jugar(VectorJugadores vectorJugadores) {
         this.vectorJugadores = vectorJugadores;
     }
 
-    public void jugar(){
+    public void jugar() {
         elegirJugadores();
         jugarPiedraPapelTijera();
+        elegirPreferenciasGanador();
+        elegirQuienInicia();
+        MotorDamas motorDamas = new MotorDamas(jugadores);
+        motorDamas.iniciarJuego();
+    }
+
+    public void elegirPreferenciasGanador() {
+        int eleccion;
+        boolean correcto = false;
+        do {
+            System.out.println(ganadorPPT.getNombre() + ", selecciona tu color");
+            System.out.println("1.- Rojo");
+            System.out.println("2.- Negro \n:");
+            eleccion = Run.entrada.nextInt();
+
+            switch (eleccion) {
+                case 1:
+                    for (int i = 0; i < jugadores.length; i++) {
+                        if (ganadorPPT.equals(jugadores[i])) {
+                            jugadores[i].setEsRoja(true);
+                        } else {
+                            jugadores[i].setEsRoja(false);
+                        }
+                    }
+                    correcto = true;
+                    break;
+                case 2:
+                    for (int i = 0; i < jugadores.length; i++) {
+                        if (ganadorPPT.equals(jugadores[i])) {
+                            jugadores[i].setEsRoja(false);
+                        } else {
+                            jugadores[i].setEsRoja(true);
+                        }
+                    }
+                    correcto = true;
+                    break;
+                default:
+                    System.out.println("La apcion que ingresaste no existe, vuelve a intentarlo");
+                    break;
+            }
+        } while (!correcto);
+    }
+
+    private void elegirQuienInicia() {
+        int eleccion;
+        boolean correcto = false;
+        System.out.println(ganadorPPT.getNombre() + ", quieres iniciar?");
+        System.out.println("1.- Si");
+        System.out.println("2.- No\n:");
+        eleccion = Run.entrada.nextInt();
+        switch (eleccion) {
+            case 1:
+                for (int i = 0; i < jugadores.length; i++) {
+                    if (ganadorPPT.equals(jugadores[i])) {
+                        jugadores[i].setIniciador(true);
+                    } else {
+                        jugadores[i].setIniciador(false);
+                    }
+                }
+                break;
+            case 2:
+                for (int i = 0; i < jugadores.length; i++) {
+                    if (ganadorPPT.equals(jugadores[i])) {
+                        jugadores[i].setIniciador(false);
+                    } else {
+                        jugadores[i].setIniciador(true);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private void elegirJugadores() {
@@ -47,6 +120,8 @@ public class Jugar {
 
         jugador1 = vectorJugadores.getJugador(posJugador1);
         jugador2 = vectorJugadores.getJugador(posJugador2);
+        jugadores[0] = jugador1;
+        jugadores[1] = jugador2;
     }
 
     // Inicio piedra papel o tijera
@@ -71,7 +146,7 @@ public class Jugar {
     private int elegirOpcion(Jugador jugador) {
         int opcionElegida;
         boolean correcto = false;
-        
+
         do {
             System.out.println("1.- Piedra");
             System.out.println("2.- Papel");

@@ -18,11 +18,11 @@ public class Movimientos {
         this.tablero = tablero;
     }
 
-    public void realizarMovimiento(int xInicial, int yInicial) {
+    public void realizarMovimiento(int xInicial, int yInicial, boolean esTurnoRojo) {
         this.xInicial = xInicial;
         this.yInicial = yInicial;
 
-        if (verificarCasilla(xInicial, yInicial)) {
+        if (verificarCasilla(xInicial, yInicial, esTurnoRojo)) {
             buscarAlrededor();
             mostrarMovimientos();
             definirCoordenadasDestino(eleccionDeOpcion());
@@ -50,12 +50,18 @@ public class Movimientos {
         // de lo contrario sale
     }
 
-    public boolean verificarCasilla(int x, int y) {
+    public boolean verificarCasilla(int x, int y, boolean esRoja) {
         boolean correcto = false;
         if (x >= 0 && x < tablero.length && y >= 0 && y < tablero.length) {
             if (tablero[x][y].tieneFicha()) {
                 this.casilla = tablero[x][y];
-                correcto = true;
+                if (esRoja && tablero[x][y].getFicha().esRoja()) {
+                    correcto = true;
+                } else if(!esRoja && !tablero[x][y].getFicha().esRoja()){
+                    correcto = true;
+                }else{
+                    System.out.println("No puedes mover fichas de tu contrincante");
+                }
             } else {
                 System.out.println("La posicion que ingresaste no tiene ficha");
             }
@@ -111,6 +117,10 @@ public class Movimientos {
                 }
             }
 
+        }
+
+        if (opcionesDeMovimiento.equals("")) {
+            opcionesDeMovimiento = "No hay movimientos para esta ficha";
         }
 
         System.out.println(opcionesDeMovimiento);

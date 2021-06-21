@@ -28,6 +28,9 @@ public class Tablero {
         organizarTablero();
     }
 
+    public Casilla[][] getTablero(){
+        return this.tablero;
+    }
     private void organizarTablero(){
         int contador = 0;
         for (int i = 0; i < tablero.length; i++) {

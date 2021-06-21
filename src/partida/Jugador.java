@@ -4,11 +4,21 @@ public class Jugador {
     private String nombre;
     private int partidasJugadas;
     private int partidasGanadas;
+    private boolean esRoja = false;
+    private boolean iniciador = false;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
         partidasJugadas = 0;
         partidasGanadas = 0;
+    }
+
+    public void setIniciador(boolean iniciar){
+        this.iniciador = iniciar;
+    }
+
+    public boolean getIniciador(){
+        return this.iniciador;
     }
 
     public void agregarVictoria() {
@@ -17,6 +27,22 @@ public class Jugador {
 
     public void agregarPartida() {
         partidasJugadas++;
+    }
+
+    public void setEsRoja(boolean esRoja){
+        this.esRoja = esRoja;
+    }
+
+    public boolean esRoja(){
+        return this.esRoja;
+    }
+
+    public String getColor(){
+        if (esRoja) {
+            return "rojo";
+        } else {
+            return "negro";
+        }
     }
 
     public int getPartidasGanadas() {

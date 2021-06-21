@@ -13,14 +13,7 @@ public class Run {
     public static Scanner entrada = new Scanner(System.in);
 
     public static void main(String[] args) {
-        //Menu menu = new Menu();
-
-        Tablero tab = new Tablero();
-        tab.iniciarTablero();
-        tab.pruebaOpcionesMover(5,2);
-        System.out.println("---------------------------------------------------");
-        tab.mostrarTablero();
-
+        Menu menu = new Menu(); 
     }
 
     public static void limpiarPantalla(){
